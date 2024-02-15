@@ -4,6 +4,25 @@ const router = express.Router()
 const needle = require('needle')
 const apicache = require('apicache')
 
+const testData = {
+    "data": {
+        "amazonProduct": {
+            "title": "Final Fantasy VII Rebirth - Exclusive Amazon Edition (PS5)",
+            "brand": "Square Enix",
+            "mainImageUrl": "https://m.media-amazon.com/images/I/8139kZStJ6L.jpg",
+            "price": {
+                "display": "$69.99"
+            },
+            "isPrime": true,
+            "stockEstimate": {
+                "availabilityMessage": "This item will be released on February 29, 2024.",
+                "stockLevel": 999,
+                "inStock": true
+            }
+        }
+    }
+}
+
 //Env vars
 const API_BASE_URL = process.env.API_BASE_URL
 const API_KEY_NAME = process.env.API_KEY_NAME
@@ -22,11 +41,16 @@ router.post('/', cache('2 minutes'), async (req, res) => {
                 [API_KEY_NAME]: API_KEY_VALUE
             }
         }
-        const apiRes = await needle.post(API_BASE_URL, req.body, options, (err, resp) => { //req.body must be used. Can't use whole stream
-            console.log(resp.body)
-            res.send(JSON.stringify(resp.body)) // stringifies the response body
-        });
-        console.log(apiRes.body)
+        //////////////////////////////////////////////////////////////
+        /*         const apiRes = await needle.post(API_BASE_URL, req.body, options, (err, resp) => { //req.body must be used. Can't use whole stream
+                    console.log(resp.body)
+                    res.send(JSON.stringify(resp.body)) // stringifies the response body
+                });
+                console.log(apiRes.body) */
+
+        res.send(JSON.stringify(testData))
+        ///////////////////////////////////////////////////////////////////
+
     } catch (error) {
         res.status(500).json({
             error
