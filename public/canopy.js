@@ -1,20 +1,41 @@
-const asin = 'B0CGXZQ4CD'
+let productURL = null
 
-const query = `
-  query amazonProduct {
-    amazonProduct(input: {asin: "${asin}"}) {
-      title
-      mainImageUrl
-      rating
-      price {
-        display
+
+document.getElementById('SubmitLink').addEventListener('click', (e) => {
+    handleSubmit(e)
+})
+
+
+const handleSubmit = (e) => {
+    e.preventDefault()
+    productURL = document.getElementById('ProductLinkInput').value
+
+    let query = `query amazonProduct {
+        amazonProduct(input: {urlLookup: {url: "${productURL}"}}) {
+          title
+          brand
+          mainImageUrl
+          price {
+            display
+          }
+          isPrime
+          stockEstimate {
+            availabilityMessage
+            stockLevel
+            inStock
+          }
+        }
       }
-    }
-  }
-`
+    `
 
-async function getExampleData(data = {}) {
-    const response = await fetch("/api", {
+    console.log(`${productURL} \n ${query}`)
+
+    postData(query);
+}
+
+
+async function getData(data = {}) {
+    const response = await fetch("/api", { //update path as needed
         method: "POST",
         mode: "cors",
         headers: {
@@ -25,12 +46,12 @@ async function getExampleData(data = {}) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-const runExample = async () => {
+const postData = async (query) => {
     const {
         data,
         error,
         errors
-    } = await getExampleData({
+    } = await getData({
         query
     });
     if (errors) {
@@ -47,29 +68,3 @@ const runExample = async () => {
     } = data;
     console.log(amazonProduct);
 };
-
-console.log("running");
-runExample();
-
-/* const postData = () => {
-    fetch(
-            "/api", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(query)
-            }
-        ).then((res) => {
-            console.log(res)
-            if (res.ok) {
-                return res.json()
-            } else {
-                alert(res.ok)
-            }
-        })
-        .then((data) => {
-            console.log(data)
-        })
-}
-postData() */

@@ -4,8 +4,6 @@ const router = express.Router()
 const needle = require('needle')
 const apicache = require('apicache')
 
-
-
 //Env vars
 const API_BASE_URL = process.env.API_BASE_URL
 const API_KEY_NAME = process.env.API_KEY_NAME
@@ -45,7 +43,7 @@ router.post('/', cache('2 minutes'), async (req, res) => {
             ...url.parse(req.url, true).query //spread operator to spread url param values
         })
 
-        const apiRes = await needle('post', `${API_BASE_URL}?${params}`)
+        const apiRes = await needle('get', `${API_BASE_URL}?${params}`)
         const data = apiRes.body
 
         if (process.env.NODE_ENV !== 'production') { //console logs post requests if not in production
