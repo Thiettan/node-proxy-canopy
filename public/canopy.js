@@ -1,5 +1,5 @@
 let productURL = null
-
+let canopyData = null
 
 document.getElementById('SubmitLink').addEventListener('click', (e) => {
     handleSubmit(e)
@@ -30,11 +30,23 @@ const handleSubmit = (e) => {
 
     console.log(`${productURL} \n ${query}`)
 
-    postData(query);
+    postData(query).then(() => {
+        renderResults(canopyData)
+    });
 }
 
+const renderResults = (data) => {
+    document.getElementById('ProductImage').setAttribute('src', data.mainImageUrl)
+    document.getElementById('ProductTitle').innerHTML = `<span>${data.title}</span>`
+    document.getElementById('Brand').innerHTML = `<span>${data.brand}</span>`
+    document.getElementById('ProductPrice').innerHTML = `<span>${data.price.display}</span>`
+    document.getElementById('IsPrime').innerHTML = `Prime: <span>${data.isPrime}</span>`
+    document.getElementById('AvailablityMsg').innerHTML = `<span>${data.stockEstimate.availabilityMessage}</span>`
+    document.getElementById('InStock').innerHTML = data.stockEstimate.inStock ? `<span>In stock</span>` : `<span>Out of stock</span>`
+    document.getElementById('StockLevel').innerHTML = `Stock Level: <span>${data.stockEstimate.stockLevel}</span>`
+}
 
-async function getData(data = {}) {
+const getData = async (data = {}) => {
     const response = await fetch("/api", { //update path as needed
         method: "POST",
         mode: "cors",
@@ -67,4 +79,6 @@ const postData = async (query) => {
         amazonProduct
     } = data;
     console.log(amazonProduct);
+    canopyData = amazonProduct
+    return amazonProduct
 };

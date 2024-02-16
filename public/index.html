@@ -15,17 +15,36 @@
 </head>
 
 <body>
-    <div id="app" class="container">
+    <div id="app" class="container-fluid">
 
-        <form action="" id="AppForm">
-            <label for="exampleFormControlInput1" class="form-label d-none">Amazon product link input field</label>
-            <input id="ProductLinkInput" type="text" class="form-control" type="text"
-                aria-label="Amazon product link input" placeholder="Amazon product link..."
-                value="https://www.amazon.com/Final-Fantasy-VII-Rebirth-PlayStation-5/dp/B0CGXZQ4CD/ref=sr_1_1?keywords=ffvii%2Brebirth&qid=1708026109&sr=8-1&th=1">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <img id="ProductImage" class="w-100" src="" alt="product cover image">
+                </div>
+                <div class="col-6">
+                    <h2 id="ProductTitle" class="text-start"></h2>
+                    <h3 id="Brand" class="text-start fw-light"></h3>
+                    <div id="ProductPrice" class="text-start"></div>
+                    <div id="IsPrime" class="text-start"></div>
+                    <div id="AvailablityMsg" class="text-start"></div>
+                    <div id="InStock" class="text-start"></div>
+                    <div id="StockLevel" class="text-start"></div>
+                </div>
 
-            <button id="SubmitLink" class="submit primary" type="submit">Submit</button>
-        </form>
+            </div>
+        </div>
 
+        <div class="container">
+            <form action="" id="AppForm">
+                <label for="exampleFormControlInput1" class="form-label d-none">Amazon product link input field</label>
+                <input id="ProductLinkInput" type="text" class="form-control" type="text"
+                    aria-label="Amazon product link input" placeholder="Amazon product link..."
+                    value="https://www.amazon.com/Final-Fantasy-VII-Rebirth-PlayStation-5/dp/B0CGXZQ4CD/ref=sr_1_1?keywords=ffvii%2Brebirth&qid=1708026109&sr=8-1&th=1">
+
+                <button id="SubmitLink" class="submit primary" type="submit">Submit</button>
+            </form>
+        </div>
     </div>
     <!--BOOSTRAP 5.3-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
